@@ -1,4 +1,3 @@
-
 import streamlit as st
 import numpy as np
 
@@ -23,11 +22,11 @@ st.markdown("Blind Data → Simple Questions → Clean Convergence")
 
 st.subheader("Understanding A - Raw Information")
 raw_A = st.text_area("Paste everything about Understanding A here", height=130, 
-                     placeholder="Lab result came back 5.5... or 'I want to order food out tonight...'")
+                     placeholder="Lab result came back 5.5...")
 
 st.subheader("Understanding B - Raw Information")
 raw_B = st.text_area("Paste everything about Understanding B here", height=130, 
-                     placeholder="Lab result came back 32... or 'I want to cook at home...'")
+                     placeholder="Lab result came back 32...")
 
 questions = [
     "Is this strongly supported by observable facts or data?",
@@ -37,12 +36,8 @@ questions = [
     "Is this repeatable or stable over time?",
     "Does this match real lived experience or intuition?",
     "Is this practical and actionable?",
-    "How free from personal bias or emotion does this feel?"
-]
-
-st.subheader("Rate both sides on these 8 questions")
-
-scores_A = [ ]
+    "How free from personal bias or emotion does this feel?" ]
+scores_B = []
 
 for i, q in enumerate(questions):
     col1, col2 = st.columns(2)
