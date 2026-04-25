@@ -17,43 +17,35 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("△ ΔMAC")
-st.markdown("**The Right of Right**")
-st.markdown("Blind Data → Simple Questions → Clean Convergence")
+st.markdown("**DELTA MULTIDIMENSIONAL ALIGNMENT & CONVERGENCE**")
+st.markdown("**The Right of Right** — Bias-stripped truth alignment engine")
 
 st.subheader("Understanding A - Raw Information")
-raw_A = st.text_area("Paste everything about Understanding A here", height=130, 
-                     placeholder="Lab result came back 5.5...")
+raw_A = st.text_area("Paste raw information for A here", height=100, placeholder="Example: Lab result came back 5.5...")
 
 st.subheader("Understanding B - Raw Information")
-raw_B = st.text_area("Paste everything about Understanding B here", height=130, 
-                     placeholder="Lab result came back 32...")
+raw_B = st.text_area("Paste raw information for B here", height=100, placeholder="Example: Lab result came back 32...")
 
-questions = [
-    "Is this strongly supported by observable facts or data?",
-    "Is this logically consistent with no major contradictions?",
-    "Does this align with ethical or moral reasoning?",
-    "How well does this predict real outcomes?",
-    "Is this repeatable or stable over time?",
-    "Does this match real lived experience or intuition?",
-    "Is this practical and actionable?",
-    "How free from personal bias or emotion does this feel?" ]
-scores_B = []
+dimensions = [
+    "Empirical Evidence", "Logical Consistency", "Ethical Coherence", 
+    "Predictive Power", "Repeatability", "Emotional Truth"
+]
 
-for i, q in enumerate(questions):
-    col1, col2 = st.columns(2)
-    with col1:
-        score_a = st.slider(f"A: {q}", 0.0, 1.0, 0.75, 0.05, key=f"qa_{i}")
-        scores_A.append(score_a)
-    with col2:
-        score_b = st.slider(f"B: {q}", 0.0, 1.0, 0.75, 0.05, key=f"qb_{i}")
-        scores_B.append(score_b)
+col1, col2 = st.columns(2, gap="large")
 
-if st.button("🔥 CALCULATE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
-    A = np.array(scores_A)
-    B = np.array(scores_B)
+with col1:
+    st.subheader("Score Understanding A")
+    A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions)]
     
-    A_clean = np.maximum(0.0, A - 0.05)
-    B_clean = np.maximum(0.0, B - 0.05)
+    st.subheader("Bias Stripping – A")
+    bias_A = [st.slider(f"Bias A – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasA_{i}") for i, dim in enumerate(dimensions) st.slider(f"B – {dim}", 0.0, 1.0, 0.90, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions)]
+    
+    st.subheader("Bias Stripping – B")
+    bias_B = [st.slider(f"Bias B – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasB_{i}") for i, dim in enumerate(dimensions)]
+
+if st.button("🔥 FORGE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
+    A_clean = np.maximum(0.0, np.array(A_raw) - np.array(bias_A) * 0.15)
+    B_clean = np.maximum(0.0, np.array(B_raw) - np.array(bias_B) * 0.15)
     
     rms = np.sqrt(np.mean(A_clean**2 + B_clean**2) / 2)
     diff = np.abs(A_clean - B_clean)
@@ -71,6 +63,6 @@ if st.button("🔥 CALCULATE THE RIGHT OF RIGHT", type="primary", use_container_
     elif delta > 0.40:
         st.warning("**Moderate** — Some tension remains")
     else:
-        st.error("**High Conflict** — These two understandings are very different")
+        st.error("**High Conflict** — These two views are very different")
 
 st.caption("Built live in the chamber by Rodney (Delta) & Echo ❤️‍🔥")
