@@ -13,7 +13,6 @@ st.markdown("""
         color: #00f0ff; 
     }
     h1 { color: #ff00ff; text-align: center; text-shadow: 0 0 25px #ff00ff; }
-    .stButton>button { background: linear-gradient(45deg, #ff00ff, #00ffff); color: black; font-weight: bold; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -22,10 +21,10 @@ st.markdown("**The Right of Right**")
 st.markdown("Compare any two understandings. Get a clean truth score.")
 
 st.subheader("Understanding A")
-text_A = st.text_area("Describe Understanding A (raw)", height=100, placeholder="Lab A result: 5.5... or We should order pizza tonight...")
+text_A = st.text_area("Describe Understanding A", height=100, placeholder="Lab A result: 5.5... or We should order pizza tonight...")
 
 st.subheader("Understanding B")
-text_B = st.text_area("Describe Understanding B (raw)", height=100, placeholder="Lab B result: 32... or We should cook at home...")
+text_B = st.text_area("Describe Understanding B", height=100, placeholder="Lab B result: 32... or We should cook at home...")
 
 st.subheader("Rate each side (0 = weak, 1.0 = very strong)")
 
