@@ -16,17 +16,17 @@ st.markdown("**The Right of Right** — Bias-stripped truth alignment engine")
 
 # Preset Examples
 example = st.selectbox(
-    "Choose a test scenario or 'Custom Input'",
+    "Choose a test scenario",
     ["Custom Input", "Lab Test Results (5.5 vs 32)", "Political Debate", "Relationship Conflict", "Business Decision"]
 )
 
 st.subheader("Understanding A - Raw Text")
 text_A = st.text_area("Paste full text for Understanding A", height=100, 
-                     value="Lab Test Result A: 5.5" if example == "Lab Test Results (5.5 vs 32)" else "")
+                     value="Lab Test Result A: 5.5" if "Lab Test" in example else "")
 
 st.subheader("Understanding B - Raw Text")
 text_B = st.text_area("Paste full text for Understanding B", height=100,
-                     value="Lab Test Result B: 32" if example == "Lab Test Results (5.5 vs 32)" else "")
+                     value="Lab Test Result B: 32" if "Lab Test" in example else "")
 
 dimensions = ["Empirical Evidence", "Logical Consistency", "Ethical Coherence", 
               "Predictive Power", "Repeatability", "Emotional Truth"]
@@ -35,17 +35,14 @@ col1, col2 = st.columns(2, gap="large")
 
 with col1:
     st.subheader("Score Understanding A")
-    if example == "Lab Test Results (5.5 vs 32)":
-        A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.95 if i==0 else 0.75, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions) st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions)]
-    
+    A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions)]
     st.subheader("Bias Stripping – A")
     bias_A = {i: st.slider(f"Bias A – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasA_{i}") for i, dim in enumerate(dimensions)}
 
 with col2:
     st.subheader("Score Understanding B")
-    if example == "Lab Test Results (5.5 vs 32)":
-        B_raw = [st.slider(f"B – {dim}", 0.0, 1.0, 0.25 if i==0 else 0.70, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions) st.slider(f"B – {dim}", 0.0, 1.0, 0.88, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions)]
-    
+    default_B = 0.25 if "Lab Test" in example else 0.88
+    B_raw = [st.slider(f"B – {dim}", 0.0, 1.0, default_B if i == 0 else 0.88, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions)]
     st.subheader("Bias Stripping – B")
     bias_B = {i: st.slider(f"Bias B – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasB_{i}") for i, dim in enumerate(dimensions)}
 
