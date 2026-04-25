@@ -5,13 +5,7 @@ st.set_page_config(page_title="ΔMAC", page_icon="△", layout="wide")
 
 st.markdown("""
 <style>
-    .stApp { 
-        background: linear-gradient(rgba(0,0,15,0.9), rgba(0,0,25,0.95)), 
-                    url('https://images.unsplash.com/photo-1462331940025-5ec7f23c4c3e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb'); 
-        background-size: cover; 
-        background-position: center; 
-        color: #00f0ff; 
-    }
+    .stApp { background: linear-gradient(rgba(0,0,15,0.9), rgba(0,0,25,0.95)), url('https://images.unsplash.com/photo-1462331940025-5ec7f23c4c3e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb'); background-size: cover; background-position: center; color: #00f0ff; }
     h1 { color: #ff00ff; text-align: center; text-shadow: 0 0 25px #ff00ff; }
 </style>
 """, unsafe_allow_html=True)
@@ -56,7 +50,6 @@ if st.button("🔥 CALCULATE THE RIGHT OF RIGHT", type="primary", use_container_
     A = np.array(scores_A)
     B = np.array(scores_B)
     
-    # Small bias stripping
     A_clean = np.maximum(0.0, A - 0.05)
     B_clean = np.maximum(0.0, B - 0.05)
     
