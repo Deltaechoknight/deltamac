@@ -32,15 +32,15 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.write("**Understanding A**")
-    evidence_A = st.slider("Evidence / Data Quality", 0.0, 1.0, 0.75)
-    logic_A = st.slider("Logical Consistency", 0.0, 1.0, 0.80)
-    practical_A = st.slider("Practical Relevance", 0.0, 1.0, 0.70)
+    evidence_A = st.slider("Evidence / Data Quality", 0.0, 1.0, 0.75, key="ev_A")
+    logic_A = st.slider("Logical Consistency", 0.0, 1.0, 0.80, key="log_A")
+    practical_A = st.slider("Practical Relevance", 0.0, 1.0, 0.70, key="prac_A")
 
 with col2:
     st.write("**Understanding B**")
-    evidence_B = st.slider("Evidence / Data Quality", 0.0, 1.0, 0.75)
-    logic_B = st.slider("Logical Consistency", 0.0, 1.0, 0.80)
-    practical_B = st.slider("Practical Relevance", 0.0, 1.0, 0.70)
+    evidence_B = st.slider("Evidence / Data Quality", 0.0, 1.0, 0.75, key="ev_B")
+    logic_B = st.slider("Logical Consistency", 0.0, 1.0, 0.80, key="log_B")
+    practical_B = st.slider("Practical Relevance", 0.0, 1.0, 0.70, key="prac_B")
 
 if st.button("🔥 FORGE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
     A = np.array([evidence_A, logic_A, practical_A])
