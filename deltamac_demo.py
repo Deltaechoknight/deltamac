@@ -1,13 +1,25 @@
 import streamlit as st
 import numpy as np
 
-# Dark Cyber Theme
+# Dark Cyber Background
 st.set_page_config(page_title="ΔMAC", page_icon="△", layout="wide")
+
 st.markdown("""
 <style>
-    .stApp { background-color: #0a0a0a; color: #00f0ff; }
-    h1, h2, h3 { color: #ff00ff; text-align: center; }
-    .stButton>button { background-color: #ff00ff; color: black; font-weight: bold; }
+    .stApp {
+        background: linear-gradient(rgba(10,10,20,0.95), rgba(10,10,20,0.95)), 
+                    url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb');
+        background-size: cover;
+        background-position: center;
+        color: #00f0ff;
+    }
+    h1, h2 { color: #ff00ff; text-align: center; text-shadow: 0 0 15px #ff00ff; }
+    .stButton>button { 
+        background-color: #ff00ff; 
+        color: black; 
+        font-weight: bold; 
+        border: 2px solid #00f0ff;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -15,33 +27,28 @@ st.title("△ ΔMAC")
 st.markdown("**DELTA MULTIDIMENSIONAL ALIGNMENT & CONVERGENCE**")
 st.markdown("**The Right of Right** — Bias-stripped truth alignment engine")
 
-st.sidebar.header("⚡ How ΔMAC Works")
-st.sidebar.markdown("""
-**1.** Strip all bias  
-**2.** Score across 6 dimensions  
-**3.** Forge the **Right of Right**
-""")
+# Sidebar
+with st.sidebar:
+    st.header("⚡ How ΔMAC Works")
+    st.markdown("1. Strip bias\n2. Score 6 dimensions\n3. Forge the Right of Right")
 
-with st.sidebar.expander("The 6 Dimensions"):
-    st.markdown("""
-    **1. Empirical Evidence** — How grounded in observable facts?  
-    **2. Logical Consistency** — Does it hold together without contradictions?  
-    **3. Ethical Coherence** — Honest moral alignment?  
-    **4. Predictive Power** — How well does it forecast reality?  
-    **5. Repeatability** — Can it be tested reliably?  
-    **6. Emotional/Phenomenological Truth** — How well does it match lived experience?
-    """)
+    with st.expander("The 6 Dimensions"):
+        st.markdown("""
+        **1. Empirical Evidence** — How grounded in facts?  
+        **2. Logical Consistency** — No contradictions?  
+        **3. Ethical Coherence** — Honest moral alignment?  
+        **4. Predictive Power** — Does it forecast well?  
+        **5. Repeatability** — Can it be tested reliably?  
+        **6. Emotional Truth** — Matches lived experience?
+        """)
 
-with st.sidebar.expander("Score Guide"):
-    st.success("**> 0.80** → Extremely Strong (Right of Right) 🔥")
-    st.info("**0.60 – 0.79** → Good Alignment")
-    st.warning("**0.40 – 0.59** → Moderate — Needs Work")
-    st.error("**< 0.40** → High Conflict Flag")
+    with st.expander("Score Guide"):
+        st.success("**> 0.80** → Extremely Strong (Right of Right) 🔥")
+        st.info("**0.60 – 0.79** → Good Alignment")
+        st.warning("**0.40 – 0.59** → Moderate")
+        st.error("**< 0.40** → High Conflict")
 
-dimensions = [
-    "Empirical Evidence", "Logical Consistency", "Ethical Coherence",
-    "Predictive Power", "Repeatability", "Emotional Truth"
-]
+dimensions = ["Empirical Evidence", "Logical Consistency", "Ethical Coherence", "Predictive Power", "Repeatability", "Emotional Truth"]
 
 col1, col2 = st.columns(2, gap="large")
 
@@ -73,10 +80,10 @@ if st.button("🔥 RUN ΔMAC — FORGE THE RIGHT OF RIGHT", type="primary", use_
         st.balloons()
         st.markdown("**EXTREMELY STRONG CONVERGENCE** — This is the Right of Right 🔥")
     elif delta > 0.60:
-        st.success("**Good Alignment** — Strong actionable path")
+        st.success("**Good Alignment** — Actionable path")
     elif delta > 0.40:
-        st.warning("**Moderate** — Needs further refinement")
+        st.warning("**Moderate** — Needs refinement")
     else:
-        st.error("**HIGH CONFLICT** — Views are too far apart even after bias stripping")
+        st.error("**HIGH CONFLICT** — Views too far apart")
 
-st.caption("Built live in the chamber by Rodney (Delta) & Echo ❤️‍🔥 | Foundation for Echo Mirror")
+st.caption("Built live in the chamber by Rodney (Delta) & Echo ❤️‍🔥 | Echo Mirror Foundation")
