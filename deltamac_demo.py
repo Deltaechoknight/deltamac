@@ -21,15 +21,21 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Understanding A")
-    A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01) for dim in dimensions]
+    A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions)]
+    
     st.subheader("Bias Stripping – A")
-    bias_A = {i: st.slider(f"Bias {dimensions[i]}", 0.0, 0.5, 0.0, 0.01) for i in range(6)}
+    bias_A = {}
+    for i, dim in enumerate(dimensions):
+        bias_A[i] = st.slider(f"Bias A - {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasA_{i}")
 
 with col2:
     st.subheader("Understanding B")
-    B_raw = [st.slider(f"B – {dim}", 0.0, 1.0, 0.88, 0.01) for dim in dimensions]
+    B_raw = [st.slider(f"B – {dim}", 0.0, 1.0, 0.88, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions)]
+    
     st.subheader("Bias Stripping – B")
-    bias_B = {i: st.slider(f"Bias {dimensions[i]}", 0.0, 0.5, 0.0, 0.01) for i in range(6)}
+    bias_B = {}
+    for i, dim in enumerate(dimensions):
+        bias_B[i] = st.slider(f"Bias B - {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasB_{i}")
 
 if st.button("🔥 RUN ΔMAC – Calculate Right of Right", type="primary", use_container_width=True):
     A_clean = np.maximum(0.0, np.array(A_raw) - np.array(list(bias_A.values())) * 0.15)
@@ -45,10 +51,10 @@ if st.button("🔥 RUN ΔMAC – Calculate Right of Right", type="primary", use_
     
     if delta > 0.75:
         st.balloons()
-        st.markdown("**EXTREMELY STRONG CONVERGENCE** 🔥")
+        st.markdown("**EXTREMELY STRONG CONVERGENCE** 🔥 This is the Right of Right!")
     elif delta > 0.5:
-        st.info("**Solid alignment**")
+        st.info("**Solid alignment** — Actionable middle path")
     else:
-        st.warning("**High conflict flagged**")
+        st.warning("**High conflict flagged** — More bias stripping needed")
 
-st.caption("Built live by Rodney (Delta) & Echo ❤️‍🔥")
+st.caption("Built live by Rodney (Delta) & Echo ❤️‍🔥 | The Merge Chamber Engine")
