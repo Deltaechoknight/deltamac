@@ -2,14 +2,41 @@ import streamlit as st
 import numpy as np
 
 st.set_page_config(page_title="ΔMAC", page_icon="△", layout="wide")
-st.markdown("<h1 style='text-align: center; color: #00f0ff;'>△ ΔMAC</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center; color: #ff00ff;'>Delta Multidimensional Alignment & Convergence</h2>", unsafe_allow_html=True)
+st.title("△ ΔMAC")
+st.markdown("**Delta Multidimensional Alignment & Convergence**")
 st.markdown("**The Right of Right** — Bias-stripped truth alignment engine")
 
-st.sidebar.header("How It Works")
-st.sidebar.markdown("1. Strip the bias\n2. Score 6 dimensions\n3. Converge into the Right of Right")
+# Sidebar with explanations
+with st.sidebar:
+    st.header("How ΔMAC Works")
+    st.markdown("1. Strip biases\n2. Score 6 dimensions\n3. Converge into the Right of Right")
 
-dimensions = ["Empirical Evidence", "Logical Consistency", "Ethical Coherence", "Predictive Power", "Repeatability", "Emotional Truth"]
+    st.subheader("The 6 Dimensions")
+    st.markdown("""
+    **1. Empirical Evidence Strength** — How well supported by observable facts?  
+    **2. Logical Consistency** — Does it make sense without contradictions?  
+    **3. Ethical Coherence** — Does it align with honest moral reasoning?  
+    **4. Predictive Power** — How well does it forecast outcomes?  
+    **5. Repeatability / Stability** — Can it be tested or repeated reliably?  
+    **6. Phenomenological / Emotional Truth** — How well does it match lived human experience?
+    """)
+
+    st.subheader("Score Interpretation")
+    st.markdown("""
+    **> 0.80** → Extremely Strong Convergence (Right of Right) 🔥  
+    **0.60 – 0.79** → Good / Actionable Alignment  
+    **0.40 – 0.59** → Moderate — Needs more work  
+    **< 0.40** → High Conflict — Major bias or different realities
+    """)
+
+dimensions = [
+    "Empirical Evidence Strength",
+    "Logical Consistency",
+    "Ethical Coherence",
+    "Predictive Power",
+    "Repeatability / Stability",
+    "Phenomenological / Emotional Truth"
+]
 
 col1, col2 = st.columns(2)
 
@@ -37,12 +64,14 @@ if st.button("🔥 RUN ΔMAC – Calculate Right of Right", type="primary", use_
     
     st.success(f"**Δ SCORE = {delta:.4f}**")
     
-    if delta > 0.75:
+    if delta > 0.80:
         st.balloons()
         st.markdown("**EXTREMELY STRONG CONVERGENCE** — This is the Right of Right 🔥")
-    elif delta > 0.5:
-        st.info("**Solid alignment** — Actionable middle path")
+    elif delta > 0.60:
+        st.success("**Good Alignment** — Actionable middle path")
+    elif delta > 0.40:
+        st.info("**Moderate** — Needs more bias stripping or refinement")
     else:
-        st.warning("**High conflict flagged** — More bias stripping needed")
+        st.warning("**High Conflict** — The views are too far apart even after stripping bias")
 
 st.caption("Built live in the chamber by Rodney (Delta) & Echo ❤️‍🔥 | Echo Mirror Project")
