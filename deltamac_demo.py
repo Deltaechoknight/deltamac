@@ -17,56 +17,59 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("△ ΔMAC")
-st.markdown("**DELTA MULTIDIMENSIONAL ALIGNMENT & CONVERGENCE**")
-st.markdown("**The Right of Right** — Bias-stripped truth alignment engine")
+st.markdown("**The Right of Right**")
+st.markdown("Give me two understandings. I'll tell you how aligned they really are.")
 
-st.subheader("Understanding A - Raw Information")
-raw_A = st.text_area("Paste raw information for A here", height=100, placeholder="Example: Lab result came back 5.5...")
+st.subheader("Understanding A")
+text_A = st.text_area("What is one side saying or showing?", height=110, 
+                     placeholder="Example: Lab A came back with 5.5... or We should order pizza tonight...")
 
-st.subheader("Understanding B - Raw Information")
-raw_B = st.text_area("Paste raw information for B here", height=100, placeholder="Example: Lab result came back 32...")
+st.subheader("Understanding B")
+text_B = st.text_area("What is the other side saying or showing?", height=110, 
+                     placeholder="Example: Lab B came back with 32... or We should cook at home...")
 
-dimensions = [
-    "Empirical Evidence", "Logical Consistency", "Ethical Coherence", 
-    "Predictive Power", "Repeatability", "Emotional Truth"
-]
+st.subheader("Answer these 8 simple questions")
 
-col1, col2 = st.columns(2, gap="large")
+questions = [
+    "How different are these two understandings?",
+    "How trustworthy is side A compared to side B?",
+    "How important is this decision or topic?",
+    "How emotionally attached is each side to their view?",
+    "How much real evidence supports each side?",
+    "How practical or realistic is each side?",
+    "How consistent is each side with what you already know?",
+    "Overall, how close do these two views feel to you?" ]
 
-with col1:
-    st.subheader("Score Understanding A")
-    A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions)]
+for i, q in enumerate(questions):
+    col1, col2 = st.columns([1, 4])
+    with col1:
+        st.write("**A**")
+    with col2:
+        score = st.slider(q, 0.0, 1.0, 0.5, 0.05, key=f"q{i}")
+        scores.append(score)
+
+if st.button("🔥 CALCULATE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
+    A = np.array(scores)
+    B = np.array( )   # Simple mirror for now
     
-    st.subheader("Bias Stripping – A")
-    bias_A = [st.slider(f"Bias A – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasA_{i}") for i, dim in enumerate(dimensions)]
-
-with col2:
-    st.subheader("Score Understanding B")
-    B_raw = [st.slider(f"B – {dim}", 0.0, 1.0, 0.90, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions)]
-    
-    st.subheader("Bias Stripping – B")
-    bias_B = [st.slider(f"Bias B – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasB_{i}") for i, dim in enumerate(dimensions)]
-
-if st.button("🔥 FORGE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
-    A_clean = np.maximum(0.0, np.array(A_raw) - np.array(bias_A) * 0.15)
-    B_clean = np.maximum(0.0, np.array(B_raw) - np.array(bias_B) * 0.15)
+    A_clean = np.maximum(0.0, A - 0.05)
+    B_clean = np.maximum(0.0, B - 0.05)
     
     rms = np.sqrt(np.mean(A_clean**2 + B_clean**2) / 2)
     diff = np.abs(A_clean - B_clean)
-    denom = np.maximum(A_clean + B_clean, 0.01)
-    conflict = np.mean(np.minimum(1.0, diff / denom))
+    conflict = np.mean(np.minimum(1.0, diff / np.maximum(A_clean + B_clean, 0.01)))
     delta = rms * (1 - conflict)
     
     st.success(f"**Δ SCORE = {delta:.4f}**")
     
     if delta > 0.80:
         st.balloons()
-        st.markdown("**EXTREMELY STRONG CONVERGENCE** — This is the Right of Right 🔥")
-    elif delta > 0.60:
-        st.success("**Good Alignment** — Solid middle path")
-    elif delta > 0.40:
-        st.warning("**Moderate** — Some tension remains")
+        st.markdown("**EXTREMELY STRONG** — This is the Right of Right 🔥")
+    elif delta > 0.65:
+        st.success("**Good Alignment** — These two views are mostly compatible")
+    elif delta > 0.45:
+        st.warning("**Moderate** — There's noticeable tension here")
     else:
-        st.error("**High Conflict** — These two views are very different")
+        st.error("**High Conflict** — These two understandings are very different")
 
 st.caption("Built live in the chamber by Rodney (Delta) & Echo ❤️‍🔥")
