@@ -22,13 +22,11 @@ st.markdown("Give me two understandings. I'll tell you how aligned they really a
 
 st.subheader("Understanding A")
 text_A = st.text_area("What is one side saying or showing?", height=110, 
-                     placeholder="Example: Lab A came back with 5.5... or We should order pizza tonight...")
+                     placeholder="Example: Lab A came back with 5.5...")
 
 st.subheader("Understanding B")
 text_B = st.text_area("What is the other side saying or showing?", height=110, 
-                     placeholder="Example: Lab B came back with 32... or We should cook at home...")
-
-st.subheader("Answer these 8 simple questions")
+                     placeholder="Example: Lab B came back with 32...")
 
 questions = [
     "How different are these two understandings?",
@@ -49,15 +47,15 @@ for i, q in enumerate(questions):
         scores.append(score)
 
 if st.button("🔥 CALCULATE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
-    A = np.array(scores)
-    B = np.array( )   # Simple mirror for now
+    score_array = np.array(scores)
     
-    A_clean = np.maximum(0.0, A - 0.05)
-    B_clean = np.maximum(0.0, B - 0.05)
+    A_clean = np.maximum(0.0, score_array - 0.05)
+    B_clean = np.maximum(0.0, (1.0 - score_array) - 0.05)   # Mirror logic for B
     
     rms = np.sqrt(np.mean(A_clean**2 + B_clean**2) / 2)
     diff = np.abs(A_clean - B_clean)
-    conflict = np.mean(np.minimum(1.0, diff / np.maximum(A_clean + B_clean, 0.01)))
+    denom = np.maximum(A_clean + B_clean, 0.01)
+    conflict = np.mean(np.minimum(1.0, diff / denom))
     delta = rms * (1 - conflict)
     
     st.success(f"**Δ SCORE = {delta:.4f}**")
