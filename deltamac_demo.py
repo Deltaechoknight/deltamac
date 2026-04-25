@@ -14,15 +14,19 @@ st.title("△ ΔMAC")
 st.markdown("**DELTA MULTIDIMENSIONAL ALIGNMENT & CONVERGENCE**")
 st.markdown("**The Right of Right** — Bias-stripped truth alignment engine")
 
-st.sidebar.header("⚡ How It Works")
-st.sidebar.markdown("Paste raw text → Score dimensions → Forge the Right of Right")
+# Preset Examples
+example = st.selectbox(
+    "Choose a test scenario or 'Custom Input'",
+    ["Custom Input", "Lab Test Results (5.5 vs 32)", "Political Debate", "Relationship Conflict", "Business Decision"]
+)
 
-# Text Input Areas (Blind Mode)
-st.subheader("Raw Understanding A (paste full text here)")
-text_A = st.text_area("Understanding A - Raw description", height=120, placeholder="Paste the full unfiltered view here...")
+st.subheader("Understanding A - Raw Text")
+text_A = st.text_area("Paste full text for Understanding A", height=100, 
+                     value="Lab Test Result A: 5.5" if example == "Lab Test Results (5.5 vs 32)" else "")
 
-st.subheader("Raw Understanding B (paste full text here)")
-text_B = st.text_area("Understanding B - Raw description", height=120, placeholder="Paste the full unfiltered view here...")
+st.subheader("Understanding B - Raw Text")
+text_B = st.text_area("Paste full text for Understanding B", height=100,
+                     value="Lab Test Result B: 32" if example == "Lab Test Results (5.5 vs 32)" else "")
 
 dimensions = ["Empirical Evidence", "Logical Consistency", "Ethical Coherence", 
               "Predictive Power", "Repeatability", "Emotional Truth"]
@@ -31,13 +35,17 @@ col1, col2 = st.columns(2, gap="large")
 
 with col1:
     st.subheader("Score Understanding A")
-    A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions)]
+    if example == "Lab Test Results (5.5 vs 32)":
+        A_raw = [st.slider(f"A – {dim}", 0.0, 1.0, 0.95 if i==0 else 0.75, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions) st.slider(f"A – {dim}", 0.0, 1.0, 0.85, 0.01, key=f"A_{i}") for i, dim in enumerate(dimensions)]
+    
     st.subheader("Bias Stripping – A")
     bias_A = {i: st.slider(f"Bias A – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasA_{i}") for i, dim in enumerate(dimensions)}
 
 with col2:
     st.subheader("Score Understanding B")
-    B_raw = [st.slider(f"B – {dim}", 0.0, 1.0, 0.88, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions)]
+    if example == "Lab Test Results (5.5 vs 32)":
+        B_raw = [st.slider(f"B – {dim}", 0.0, 1.0, 0.25 if i==0 else 0.70, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions) st.slider(f"B – {dim}", 0.0, 1.0, 0.88, 0.01, key=f"B_{i}") for i, dim in enumerate(dimensions)]
+    
     st.subheader("Bias Stripping – B")
     bias_B = {i: st.slider(f"Bias B – {dim}", 0.0, 0.5, 0.0, 0.01, key=f"biasB_{i}") for i, dim in enumerate(dimensions)}
 
@@ -63,4 +71,4 @@ if st.button("🔥 FORGE THE RIGHT OF RIGHT", type="primary", use_container_widt
     else:
         st.error("**HIGH CONFLICT** — Fundamentally different realities")
 
-st.caption("Built live in the chamber by Rodney (Delta) & Echo ❤️‍🔥 | Echo Mirror Foundation")
+st.caption("Built live in the chamber by Rodney (Delta) & Echo ❤️‍🔥")
