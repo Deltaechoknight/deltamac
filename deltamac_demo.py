@@ -18,55 +18,43 @@ st.markdown("""
 
 st.title("△ ΔMAC")
 st.markdown("**The Right of Right**")
-st.markdown("Give me two understandings. I'll tell you how aligned they really are.")
+st.markdown("Compare any two understandings. Get a clear truth score.")
 
 st.subheader("Understanding A")
-text_A = st.text_area("What is one side saying or showing?", height=110, 
-                     placeholder="Example: Lab A came back with 5.5...")
+text_A = st.text_area("Describe Understanding A", height=90, placeholder="Lab A result: 5.5  |  We should cook at home tonight...")
 
 st.subheader("Understanding B")
-text_B = st.text_area("What is the other side saying or showing?", height=110, 
-                     placeholder="Example: Lab B came back with 32...")
+text_B = st.text_area("Describe Understanding B", height=90, placeholder="Lab B result: 32  |  We should order food out...")
 
-questions = [
-    "How different are these two understandings?",
-    "How trustworthy is side A compared to side B?",
-    "How important is this decision or topic?",
-    "How emotionally attached is each side to their view?",
-    "How much real evidence supports each side?",
-    "How practical or realistic is each side?",
-    "How consistent is each side with what you already know?",
-    "Overall, how close do these two views feel to you?" ]
+st.subheader("Answer these 4 practical questions")
 
-for i, q in enumerate(questions):
-    col1, col2 = st.columns([1, 4])
-    with col1:
-        st.write("**A**")
-    with col2:
-        score = st.slider(q, 0.0, 1.0, 0.5, 0.05, key=f"q{i}")
-        scores.append(score)
+q1 = st.slider("1. How far apart are these two things?", 0.0, 1.0, 0.5, 0.05, help="0 = almost identical, 1 = completely opposite")
+q2 = st.slider("2. How much more do you trust A over B?", -1.0, 1.0, 0.0, 0.05, help="Positive = trust A more, Negative = trust B more")
+q3 = st.slider("3. How important is this decision?", 0.0, 1.0, 0.6, 0.05, help="How high are the stakes?")
+q4 = st.slider("4. How clear is the evidence for each side?", 0.0, 1.0, 0.7, 0.05, help="How objective is the data?")
 
-if st.button("🔥 CALCULATE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
-    score_array = np.array(scores)
+if st.button("🔥 FORGE THE RIGHT OF RIGHT", type="primary", use_container_width=True):
+    # Simple but robust calculation
+    difference = q1
+    trust_bias = abs(q2)
+    importance = q3
+    evidence = q4
     
-    A_clean = np.maximum(0.0, score_array - 0.05)
-    B_clean = np.maximum(0.0, (1.0 - score_array) - 0.05)   # Mirror logic for B
+    alignment = 1 - difference
+    weighted_alignment = (alignment * 0.4) + (evidence * 0.35) + ((1 - trust_bias) * 0.25)
     
-    rms = np.sqrt(np.mean(A_clean**2 + B_clean**2) / 2)
-    diff = np.abs(A_clean - B_clean)
-    denom = np.maximum(A_clean + B_clean, 0.01)
-    conflict = np.mean(np.minimum(1.0, diff / denom))
-    delta = rms * (1 - conflict)
+    delta = round(weighted_alignment * importance * 1.15, 4)
+    delta = min(0.98, max(0.05, delta))   # Keep it between 0.05 and 0.98
     
     st.success(f"**Δ SCORE = {delta:.4f}**")
     
     if delta > 0.80:
         st.balloons()
-        st.markdown("**EXTREMELY STRONG** — This is the Right of Right 🔥")
+        st.markdown("**EXTREMELY STRONG CONVERGENCE** — This is the Right of Right 🔥")
     elif delta > 0.65:
-        st.success("**Good Alignment** — These two views are mostly compatible")
+        st.success("**Strong Alignment** — Good path forward")
     elif delta > 0.45:
-        st.warning("**Moderate** — There's noticeable tension here")
+        st.warning("**Moderate** — Some work needed")
     else:
         st.error("**High Conflict** — These two understandings are very different")
 
